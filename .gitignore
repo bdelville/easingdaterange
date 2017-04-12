@@ -12,3 +12,29 @@
 .hprof
 build
 *.log
+
+
+## File-based project format:
+*.ipr
+*.iws
+
+# [Maven] ========================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# [Gradle-Android] ========================
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Gradle Signing
+signing.properties
+trestle.keystore
+
+# Package Files #
+*.jar
+*.war
+*.ear
