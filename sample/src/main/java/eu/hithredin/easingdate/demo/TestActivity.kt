@@ -3,9 +3,7 @@ package eu.hithredin.easingdate.demo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import eu.hithredin.easingdate.DAY
-import eu.hithredin.easingdate.DateRangeChangeListener
-import eu.hithredin.easingdate.EDatePickerView
+import eu.hithredin.easingdate.*
 
 class TestActivity : AppCompatActivity() {
 
@@ -13,11 +11,17 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 
-        val picker = findViewById(R.id.date_picker) as EDatePickerView
+        initPicker(findViewById(R.id.date_picker) as EDatePickerView, 35 * DAY, TimeMode.LINEAR)
+        initPicker(findViewById(R.id.date_picker2) as EDatePickerView, 35 * DAY, TimeMode.CUBIC)
+        initPicker(findViewById(R.id.date_picker3) as EDatePickerView, 35 * DAY, TimeMode.QUADRATIC)
+        initPicker(findViewById(R.id.date_picker4) as EDatePickerView, 5 * HOUR, TimeMode.ATAN)
+    }
 
+    fun initPicker(picker: EDatePickerView, delta: Long, mode: TimeMode){
         val now = System.currentTimeMillis()
-        picker.minDate = now - (5 * DAY)
-        picker.maxDate = now + (5 * DAY)
+        picker.minDate = now - delta
+        picker.maxDate = now + delta
+        picker.mode = mode
 
         picker.dateChangeSet = object : DateRangeChangeListener {
             override fun onDateChanged(lowerDate: Long, upperDate: Long) {

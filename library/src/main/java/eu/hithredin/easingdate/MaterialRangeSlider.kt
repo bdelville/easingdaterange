@@ -36,7 +36,7 @@ class MaterialRangeSlider : View {
     private val DEFAULT_OUTSIDE_RANGE_STROKE_WIDTH = 4
     private val HORIZONTAL_PADDING = (DEFAULT_PRESSED_RADIUS / 2) + DEFAULT_OUTSIDE_RANGE_STROKE_WIDTH
 
-    val DEFAULT_MAX = 1000
+    val DEFAULT_MAX: Int = 1000
 
     private var unpressedRadius: Float = 0.toFloat()
     private var pressedRadius: Float = 0.toFloat()
@@ -52,9 +52,21 @@ class MaterialRangeSlider : View {
     //List of event IDs touching targets
     private val isTouchingMinTarget = HashSet<Int>()
     private val isTouchingMaxTarget = HashSet<Int>()
-    private var min = 0
-    private var max = DEFAULT_MAX
-    private var range: Int = 0
+
+    var min: Int = 0
+        set(min) {
+            field = min
+            range = max - min
+        }
+
+    var max: Int = DEFAULT_MAX
+        set(max) {
+            field = max
+            range = max - min
+        }
+
+    var range: Int = 0; private set
+
     private var convertFactor: Float = 0.toFloat()
     var rangeSliderListener: RangeSliderListener? = null
     private var targetColor: Int = 0
@@ -375,29 +387,6 @@ class MaterialRangeSlider : View {
             callMaxChangedCallbacks()
         }
 
-    fun setMinMax(startingMin: Int, startingMax: Int) {
-        this.min = startingMin
-        this.max = startingMax
-    }
-
-    fun getMin(): Int {
-        return min
-    }
-
-    fun setMin(min: Int) {
-        this.min = min
-        range = max - min
-    }
-
-    fun getMax(): Int {
-        return max
-    }
-
-    fun setMax(max: Int) {
-        this.max = max
-        range = max - min
-    }
-
     /**
      * Resets selected values to MIN and MAX.
      */
@@ -407,14 +396,6 @@ class MaterialRangeSlider : View {
         rangeSliderListener?.onLowerChanged(selectedMin)
         rangeSliderListener?.onUpperChanged(selectedMax)
         invalidate()
-    }
-
-    fun setMinTargetRadius(minTargetRadius: Float) {
-        this.minTargetRadius = minTargetRadius
-    }
-
-    fun setMaxTargetRadius(maxTargetRadius: Float) {
-        this.maxTargetRadius = maxTargetRadius
     }
 
     /**
