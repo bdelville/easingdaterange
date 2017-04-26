@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Easing fo the date selector
+ * Easing of the date selector
  */
 enum class TimeMode {
     /** No preference */
@@ -79,6 +79,8 @@ class EDatePickerView : RelativeLayout, RangeSliderListener {
         textMaxDate = findViewById(R.id.text_date_max) as TextView
         rangeSlider = findViewById(R.id.range_slider) as MaterialRangeSlider
         rangeSlider.rangeSliderListener = this
+
+        // TODO Improve Text Style using Material design
     }
 
     override fun onUpperChanged(newValue: Int) {

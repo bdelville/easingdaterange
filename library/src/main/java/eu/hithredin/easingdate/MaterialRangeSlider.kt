@@ -22,8 +22,9 @@ interface RangeSliderListener {
 }
 
 /**
- * Slider following Material Design with two movable targets
- * that allow user to select a range of integers.
+ * Slider following Material Design with two movable targets that allow user to select a range of integers.
+ *
+ * Convertion from https://github.com/twotoasters/MaterialRangeSlider
  */
 class MaterialRangeSlider : View {
 
