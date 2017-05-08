@@ -115,7 +115,7 @@ class EDatePickerView : RelativeLayout, RangeSliderListener {
 
     /**
      * Convert the slider value [0-DEFAULT_MAX] to a Date
-     *
+     * TODO Allow setting the middle value for the easing function
      * TODO optimize function parameters calculations
      * TODO Allow a dynamic range, the slider itself expands in a nice animation when reaching borders
      */

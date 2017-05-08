@@ -25,7 +25,7 @@ class TestActivity : AppCompatActivity() {
 
         picker.dateChangeSet = object : DateRangeChangeListener {
             override fun onDateChanged(lowerDate: Long, upperDate: Long) {
-                Toast.makeText(this@TestActivity, "Date set", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this@TestActivity, "Date set", Toast.LENGTH_SHORT).show()
             }
         }
     }
