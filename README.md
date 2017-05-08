@@ -1,5 +1,8 @@
 #### Date-Range picker adaptative
 
+Still in beta!
+
+
 todo insert gif when released
 
 Quickly select a date span with a double-slider.
@@ -11,7 +14,8 @@ Quickly select a date span with a double-slider.
 ## How to integrate in your project
 
 Gradle configuration
-TODO
+
+compile "com.github.bdelville:easingdate-ranger:0.0.1"
 
 ## How to use
 
