@@ -43,13 +43,16 @@ class EDatePickerView : RelativeLayout, RangeSliderListener {
     var minDate: Long = 0.toLong()
         set(date) {
             field = date
+            if (pivotDate == 0L) setDefaultPivot()
             onLowerChanged(rangeSlider.selectedMin)
         }
     var maxDate: Long = 0.toLong()
         set(date) {
             field = date
+            if (pivotDate == 0L) setDefaultPivot()
             onUpperChanged(rangeSlider.selectedMax)
         }
+    var pivotDate: Long = 0.toLong()
     var lowerDate: Long = minDate; private set
     var upperDate: Long = maxDate; private set
     var mode: TimeMode = TimeMode.LINEAR
@@ -71,6 +74,14 @@ class EDatePickerView : RelativeLayout, RangeSliderListener {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(attrs)
+    }
+
+    fun setDefaultPivot() {
+        if(maxDate > 0L && minDate > 0L){
+            pivotDate = minDate + (maxDate - minDate) / 2
+        } else {
+            pivotDate = if(minDate == 0L) maxDate else minDate
+        }
     }
 
     fun init(attrs: AttributeSet?) {
@@ -115,31 +126,31 @@ class EDatePickerView : RelativeLayout, RangeSliderListener {
 
     /**
      * Convert the slider value [0-DEFAULT_MAX] to a Date
-     * TODO Allow setting the middle value for the easing function
+     * We assume the maxDate is always respected (not the min Date)
      * TODO optimize function parameters calculations
      * TODO Allow a dynamic range, the slider itself expands in a nice animation when reaching borders
      */
     fun toDate(slider: Int): Long {
+        val xPivot  = (pivotDate - minDate) * rangeSlider.range / (maxDate - minDate)
+        val x: Double = (slider - xPivot).toDouble()
+        val D: Double = (pivotDate - minDate).toDouble() // Delta X to apply
+
         when (mode) {
             TimeMode.LINEAR -> {
                 val rangeDate = (maxDate - minDate) * slider
-                return minDate + (rangeDate / rangeSlider.DEFAULT_MAX)
+                return minDate + (rangeDate / rangeSlider.range)
             }
             TimeMode.CUBIC -> {
-                val sliderX: Double = (slider - rangeSlider.DEFAULT_MAX.toDouble() / 2)
-                val alpha: Double = ((maxDate - minDate) / 2) / Math.pow(rangeSlider.range.toDouble() / 2, 3.0)
-                return (minDate + ((maxDate - minDate) / 2) + Math.pow(sliderX, 3.0) * alpha).toLong()
+                val alpha: Double = (maxDate - pivotDate) / Math.pow(rangeSlider.max.toDouble() - xPivot, 3.0)
+                return (pivotDate + Math.pow(x, 3.0) * alpha).toLong()
             }
             TimeMode.QUADRATIC -> {
-                val sliderX: Double = (slider - rangeSlider.DEFAULT_MAX.toDouble() / 2)
-                val quadratic = Math.pow(Math.abs(sliderX), 2.0)
-                val alpha: Double = ((maxDate - minDate) / 2) / Math.pow(rangeSlider.range.toDouble() / 2, 2.0)
-                return (minDate + ((maxDate - minDate) / 2) + quadratic * alpha * Math.signum(sliderX)).toLong()
+                val alpha: Double = (maxDate - pivotDate) / Math.pow(rangeSlider.max.toDouble() - xPivot, 2.0)
+                return (pivotDate + Math.pow(Math.abs(x), 2.0) * alpha * Math.signum(x)).toLong()
             }
             TimeMode.ATAN -> {
-                val sliderX: Double = (slider - rangeSlider.DEFAULT_MAX.toDouble() / 2)
-                val alpha: Double = ((maxDate - minDate) / 2) / Math.atan(rangeSlider.range.toDouble() / 2)
-                return (minDate + ((maxDate - minDate) / 2) + Math.atan(sliderX) * alpha).toLong()
+                val alpha: Double = (maxDate - pivotDate) / Math.atan(rangeSlider.max.toDouble() - xPivot)
+                return (pivotDate + Math.atan(x) * alpha).toLong()
             }
         }
     }

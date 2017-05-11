@@ -411,4 +411,12 @@ class MaterialRangeSlider : View {
         }
         return value
     }
+
+    fun setMinTargetRadius(minTargetRadius: Float) {
+        this.minTargetRadius = minTargetRadius
+    }
+
+    fun setMaxTargetRadius(maxTargetRadius: Float) {
+        this.maxTargetRadius = maxTargetRadius
+    }
 }

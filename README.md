@@ -2,8 +2,7 @@
 
 Still in beta!
 
-
-todo insert gif when released
+![todo insert gif when released]()
 
 Quickly select a date span with a double-slider.
 
@@ -15,11 +14,11 @@ Quickly select a date span with a double-slider.
 
 Gradle configuration
 
-compile "com.github.bdelville:easingdate-ranger:0.0.1"
+`compile "com.github.bdelville:easingdate-ranger:0.0.1"`
 
 ## How to use
 
-![/blob/master/sample/src/main/java/eu/hithredin/easingdate/demo/TestActivity.kt]
+[Sample activity](/blob/master/sample/src/main/java/eu/hithredin/easingdate/demo/TestActivity.kt)
 
 # Note
-* Based of the work from https://github.com/twotoasters/MaterialRangeSlider
+* Based on the work of [MaterialRangeSlider](https://github.com/twotoasters/MaterialRangeSlider)
